@@ -130,7 +130,28 @@ D'autres captures (Disque, Reseau avec le detail de Reset pile TCP/IP, Windows U
 
 1. Copier **a la fois** `Toolbox-SystemCommands-FRENCH.ps1` **et** `Commands-FRENCH.psd1` — issus du meme dossier de langue, voir [Structure des dossiers](#structure-des-dossiers--en-vs-french) — sur la machine cible, dans le meme dossier (ex : `C:\Scripts\Toolbox`). Le script ne trouvera pas ses commandes si `Commands-FRENCH.psd1` est laisse de cote.
 
-2. Valider le catalogue et les fonctions internes **sans ouvrir l'interface et sans droits admin** :
+2. Ouvrir un terminal PowerShell, puis se placer dans le dossier qui contient les deux fichiers (adapter le chemin ; garder les guillemets s'il contient des espaces) :
+
+   ```powershell
+   cd "$HOME\Downloads"
+   ```
+
+3. **Debloquer les deux fichiers** s'ils ont ete telecharges depuis Internet. Windows marque les fichiers telecharges, et la politique d'execution de PowerShell (`RemoteSigned`, par exemple) refuse de lancer un script marque :
+
+   ```powershell
+   Unblock-File .\Toolbox-SystemCommands-FRENCH.ps1
+   Unblock-File .\Commands-FRENCH.psd1
+   ```
+
+   Si PowerShell indique plutot que l'execution de scripts est desactivee sur ce systeme (la politique par defaut de Windows est `Restricted`), autoriser d'abord les scripts pour le compte courant (la modification ne s'applique qu'a ce compte, pas a toute la machine) :
+
+   ```powershell
+   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+   ```
+
+   Toujours bloque ? Voir le [guide pas a pas](https://github.com/NephVx2/Script-blocked-Look-at-this/blob/main/README_POWERSHELL_FRENCH.md).
+
+4. Valider le catalogue et les fonctions internes **sans ouvrir l'interface et sans droits admin** :
 
    ```powershell
    .\Toolbox-SystemCommands-FRENCH.ps1 -SelfTest
@@ -138,19 +159,19 @@ D'autres captures (Disque, Reseau avec le detail de Reset pile TCP/IP, Windows U
 
    Execute 47 assertions : structure du catalogue (chaque commande a un libelle/une commande/une description/un flag confirm, aucun libelle duplique), regressions connues (aucun pipe non echappe, aucun `wmic`, les blocs `-EncodedCommand` decodent et se parsent tous correctement), les six commandes sensibles nommees portent toutes `Confirm = $true`, toutes les fonctions requises sont definies, les chemins de journalisation/favoris sont valides, et la verification d'elevation elle-meme fonctionne. Sort avec le code `0` si tout passe, `1` sinon.
 
-3. Lancer la toolbox normalement (accepter le prompt UAC) :
+5. Lancer la toolbox normalement (accepter le prompt UAC) :
 
    ```powershell
    .\Toolbox-SystemCommands-FRENCH.ps1
    ```
 
-4. Parcourir par categorie, ou appuyer sur `Ctrl+F` et rechercher ce dont vous avez besoin (ex : "DNS", "BitLocker", "telemetrie").
+6. Parcourir par categorie, ou appuyer sur `Ctrl+F` et rechercher ce dont vous avez besoin (ex : "DNS", "BitLocker", "telemetrie").
 
-5. Cliquer sur une commande. Si elle est marquee sensible, confirmer le prompt Oui/Non. Une fenetre console s'ouvre et l'execute — lisez sa sortie directement la.
+7. Cliquer sur une commande. Si elle est marquee sensible, confirmer le prompt Oui/Non. Une fenetre console s'ouvre et l'execute — lisez sa sortie directement la.
 
-6. Marquer d'une etoile (⭐) les commandes que vous utilisez souvent — elles seront ensuite rapidement filtrables sans avoir a fouiller dans les categories.
+8. Marquer d'une etoile (⭐) les commandes que vous utilisez souvent — elles seront ensuite rapidement filtrables sans avoir a fouiller dans les categories.
 
-7. Pour consulter ce qui a ete lance, utiliser le bouton d'export HTML ou JSON dans la barre superieure.
+9. Pour consulter ce qui a ete lance, utiliser le bouton d'export HTML ou JSON dans la barre superieure.
 
 ---
 
