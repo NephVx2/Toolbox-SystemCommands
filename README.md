@@ -130,7 +130,28 @@ More screenshots (Disk, Windows Update, Performance, Quick security, Privacy/Tel
 
 1. Copy **both** `Toolbox-SystemCommands.ps1` **and** `Commands.psd1` — from the same language folder, see [Folder structure](#folder-structure-en-vs-french) — to the target machine, in the same folder (e.g. `C:\Scripts\Toolbox`). The script will not find its commands if `Commands.psd1` is left behind.
 
-2. Validate the catalog and internal functions **without opening the UI and without admin rights**:
+2. Open a PowerShell terminal, then go to the folder that contains both files (adjust the path; keep the quotes if it contains spaces):
+
+   ```powershell
+   cd "$HOME\Downloads"
+   ```
+
+3. **Unblock both files** if you downloaded them from the Internet. Windows flags downloaded files, and PowerShell's execution policy (`RemoteSigned`, for example) refuses to run a flagged script:
+
+   ```powershell
+   Unblock-File .\Toolbox-SystemCommands.ps1
+   Unblock-File .\Commands.psd1
+   ```
+
+   If PowerShell says instead that running scripts is disabled on this system (the Windows default policy is `Restricted`), allow scripts for the current account first (the change applies to this account only, not to the whole machine):
+
+   ```powershell
+   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+   ```
+
+   Still blocked? See the [step-by-step guide](https://github.com/NephVx2/Script-blocked-Look-at-this).
+
+4. Validate the catalog and internal functions **without opening the UI and without admin rights**:
 
    ```powershell
    .\Toolbox-SystemCommands.ps1 -SelfTest
@@ -138,19 +159,19 @@ More screenshots (Disk, Windows Update, Performance, Quick security, Privacy/Tel
 
    Runs 47 assertions: catalog structure (every command has a label/command/description/confirm flag, no duplicate labels), known regressions (no unescaped pipes, no `wmic`, `-EncodedCommand` blocks all decode and parse cleanly), the six named sensitive commands all carry `Confirm = $true`, all required functions are defined, logging/favorites paths are valid, and the elevation check itself works. Exits with code `0` on full pass, `1` otherwise.
 
-3. Launch the toolbox normally (accept the UAC prompt):
+5. Launch the toolbox normally (accept the UAC prompt):
 
    ```powershell
    .\Toolbox-SystemCommands.ps1
    ```
 
-4. Browse by category, or press `Ctrl+F` and search for what you need (e.g. "DNS", "BitLocker", "telemetry").
+6. Browse by category, or press `Ctrl+F` and search for what you need (e.g. "DNS", "BitLocker", "telemetry").
 
-5. Click a command. If it's flagged sensitive, confirm the Yes/No prompt. A console window opens and runs it — read its output directly there.
+7. Click a command. If it's flagged sensitive, confirm the Yes/No prompt. A console window opens and runs it — read its output directly there.
 
-6. Star (⭐) the commands you use often — they'll be quickly filterable afterward without hunting through categories.
+8. Star (⭐) the commands you use often — they'll be quickly filterable afterward without hunting through categories.
 
-7. When you want to review what's been run, use the HTML or JSON export button in the top bar.
+9. When you want to review what's been run, use the HTML or JSON export button in the top bar.
 
 ---
 
