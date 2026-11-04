@@ -4,7 +4,7 @@
 
 A dark-themed WinForms launcher for Windows 11 system commands. One click runs a diagnostic or maintenance command in its own console window — no more hunting for the right `DISM`/`SFC`/`netsh` incantation or retyping it from memory every time.
 
-> 145 commands across 9 categories, each with a plain-language description, confirmation prompts on anything state-changing, full history logging, and a 47-assertion self-test that never needs admin rights or opens the UI.
+> 157 commands across 9 categories, each with a plain-language description, confirmation prompts on anything state-changing, full history logging, and a 47-assertion self-test that never needs admin rights or opens the UI.
 
 ---
 
@@ -35,7 +35,7 @@ Each command runs in **its own console window** (`cmd.exe /k`), so you see the r
 
 The app **self-elevates on launch**: since most commands need administrator rights anyway, elevation happens once for the whole session, and every console window it opens afterward inherits that elevation — no repeated UAC prompts per button.
 
-A single companion file ships alongside the script and must stay in the same folder: **`Commands.psd1`**, the command catalog (145 commands).
+A single companion file ships alongside the script and must stay in the same folder: **`Commands.psd1`**, the command catalog (157 commands).
 
 ---
 
@@ -46,7 +46,7 @@ This repository ships **two independent, self-contained versions** of the toolbo
 | Folder | Contents |
 |---|---|
 | **`Toolbox-SystemCommands-EN/`** | `Toolbox-SystemCommands.ps1` + `Commands.psd1` — fully in English: labels, descriptions, help text, and everything printed to the console |
-| **`Toolbox-SystemCommands-FRENCH/`** | The French-language script and catalog — same features, same 145 commands, entirely in French |
+| **`Toolbox-SystemCommands-FRENCH/`** | The French-language script and catalog — same features, same 157 commands, entirely in French |
 
 The two are functionally identical (same catalog, same categories, same self-test count) — only the display language differs. Pick **one** folder and copy **both files it contains together**; don't mix a `.ps1` from one folder with the `Commands.psd1` from the other; the labels and text would end up in two different languages within the same interface. Both versions work equally well on an English- or French-language Windows install — this script only reads/writes the registry and WMI directly, so unlike some other scripts in the suite, nothing here is affected by Windows' own display language.
 
@@ -74,7 +74,7 @@ More screenshots (Disk, Windows Update, Performance, Quick security, Privacy/Tel
 | **Collapsible categories** | Click a category header to fold/unfold it — useful once the catalog grows past a couple dozen commands |
 | **Favorites** | Click the star next to any command to pin it; persisted in `Favorites.txt` across sessions; "Favorites only" filter available |
 | **Search** | `Ctrl+F` jumps straight to the search box; matches against the command's label, description, **and** help text (not just the visible button label) |
-| **Help button (`?`)** | Present on every command for layout consistency, but only active (cyan, clickable) on commands that have a `Help` field — opens a message box with a longer explanation. 81 of 145 commands currently have one |
+| **Help button (`?`)** | Present on every command for layout consistency, but only active (cyan, clickable) on commands that have a `Help` field — opens a message box with a longer explanation. 93 of 157 commands currently have one |
 | **Right-click → Copy command** | Copies the real underlying command line to the clipboard, in case you'd rather run or inspect it yourself |
 | **Confirmation prompts** | Commands flagged `Confirm = $true` in the catalog ask Yes/No before launching (see [Command safety model](#command-safety-model)) |
 | **History log** | Every launch is timestamped and recorded, with the machine name, user, Windows version, and the PID of the launched process |
@@ -89,7 +89,7 @@ More screenshots (Disk, Windows Update, Performance, Quick security, Privacy/Tel
 
 ## Command catalog
 
-**145 commands** across **9 categories**. Full plain-language description and (for many) an extended help text are shown directly in the app — this table is a map, not a substitute for it.
+**157 commands** across **9 categories**. Full plain-language description and (for many) an extended help text are shown directly in the app — this table is a map, not a substitute for it.
 
 | Category | Count | Examples |
 |---|---|---|
@@ -99,7 +99,7 @@ More screenshots (Disk, Windows Update, Performance, Quick security, Privacy/Tel
 | **Windows Update** | 9 | Component reset, forced scan, Microsoft Store reset, update history, SoftwareDistribution cache size, pending-reboot check |
 | **Performance** | 16 | Startup apps (including scheduled-task-based ones), boot time breakdown, WinSAT score, HVCI/VBS toggles, top RAM/CPU processes, Windows Search service |
 | **Drivers / Hardware** | 12 | Devices in error state, NVIDIA GPU status, BIOS/motherboard info, installed RAM, recently installed drivers, disabled devices |
-| **Quick security** | 22 | Defender status, SMBv1 check, firewall verification, Secure Boot/TPM, BitLocker, failed logon attempts, ASR rules, UAC, Credential Guard, Controlled Folder Access |
+| **Quick security** | 34 | Defender status, SMBv1 check, firewall verification, Secure Boot/TPM, BitLocker, failed logon attempts, ASR rules, UAC, Credential Guard, Controlled Folder Access, automatic IPv6 tunnels (Teredo / 6to4 / ISATAP), legacy name resolution (LLMNR / NetBIOS / mDNS), Defender in depth (exclusions, Tamper Protection) and threat history, PowerShell hardening (v2, logging), remote-access services, stored credentials and autologon — most with a read-only check and, where a safe fix exists, a matching disable command |
 | **Privacy / Telemetry** | 28 | Telemetry level, camera/mic/location access, Advertising ID, Windows Recall, Start menu web search & sponsored suggestions, Copilot, Delivery Optimization, WER, OneDrive sync — most as paired "check status" / "disable" commands |
 | **Miscellaneous** | 17 | Battery report, power diagnostics, DirectX report, Windows activation status, unexpected shutdown history, time sync, installed printers |
 
@@ -108,7 +108,7 @@ More screenshots (Disk, Windows Update, Performance, Quick security, Privacy/Tel
 ## Command safety model
 
 - **Every command has `Confirm = $true` or `$false`** in the catalog — there is no "undecided" state; the self-test enforces that this field is always present.
-- **26 commands currently require confirmation** — anything that changes system state, needs a restart, or could disrupt a running session (e.g. `Reset Winsock`, `Reset TCP/IP stack`, `CHKDSK C: /f /r (on reboot)`, `Restart PC`, `Shut down PC`, most of the disable-toggles in Privacy / Telemetry).
+- **31 commands currently require confirmation** — anything that changes system state, needs a restart, or could disrupt a running session (e.g. `Reset Winsock`, `Reset TCP/IP stack`, `CHKDSK C: /f /r (on reboot)`, `Restart PC`, `Shut down PC`, `Disable automatic IPv6 tunnels`, `Disable PowerShell 2.0`, `Disable automatic logon (Winlogon)`, most of the disable-toggles in Privacy / Telemetry).
 - A dedicated self-test assertion locks in that six specific known-sensitive commands (Winsock reset, TCP/IP stack reset, WU component reset, scheduled CHKDSK, restart, shutdown) **always** carry `Confirm = $true` — a regression there would fail `-SelfTest` immediately rather than surface as a silent, un-confirmed destructive action later.
 - **No command uses `wmic`** (removed starting Windows 11 24H2) — enforced by a dedicated self-test regression check.
 - The `Cmd` field in the catalog is **always single-quoted** in `Commands.psd1`, which structurally prevents PowerShell variable interpolation (`$_`, `$err`, etc.) from ever leaking into a command — the root cause of two early bugs (v1.4.3, v1.4.4) that this design eliminates entirely rather than patching case by case.
@@ -295,7 +295,7 @@ Read the assertion label — it points directly at what's wrong: a missing field
 <details>
 <summary><strong>The history report doesn't show what a command actually printed</strong></summary>
 
-By design — each command launches in its own interactive `cmd.exe` window (`Start-Process`, no output redirection), so `History.log` records the command that was run, not its output. Capturing real output would mean redirecting every one of the 145 commands into a log file, which would also make several of them (the ones intentionally left interactive/open, like live network monitors) behave differently than intended — a larger architectural change, not the current design.
+By design — each command launches in its own interactive `cmd.exe` window (`Start-Process`, no output redirection), so `History.log` records the command that was run, not its output. Capturing real output would mean redirecting every one of the 157 commands into a log file, which would also make several of them (the ones intentionally left interactive/open, like live network monitors) behave differently than intended — a larger architectural change, not the current design.
 </details>
 
 ---
