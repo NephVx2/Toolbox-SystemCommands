@@ -2,133 +2,133 @@
 
 🇬🇧 [English version](README.md)
 
-Un lanceur WinForms a theme sombre pour les commandes systeme Windows 11. Un clic execute une commande de diagnostic ou de maintenance dans sa propre fenetre console — plus besoin de chercher la bonne formule `DISM`/`SFC`/`netsh` ou de la retaper de memoire a chaque fois.
+Un lanceur WinForms à thème sombre pour les commandes système Windows 11. Un clic exécute une commande de diagnostic ou de maintenance dans sa propre fenêtre console — plus besoin de chercher la bonne formule `DISM`/`SFC`/`netsh` ou de la retaper de mémoire à chaque fois.
 
-> 145 commandes reparties en 9 categories, chacune avec une description en langage clair, une confirmation demandee pour tout ce qui modifie l'etat du systeme, une journalisation complete de l'historique, et un self-test a 47 assertions qui ne necessite jamais les droits admin ni n'ouvre l'interface.
+> 157 commandes réparties en 9 catégories, chacune avec une description en langage clair, une confirmation demandée pour tout ce qui modifie l'état du système, une journalisation complète de l'historique, et un self-test à 47 assertions qui ne nécessite jamais les droits admin ni n'ouvre l'interface.
 
 ---
 
 ## Sommaire
 
-- [Presentation](#presentation)
+- [Présentation](#présentation)
 - [Structure des dossiers : EN vs FRENCH](#structure-des-dossiers--en-vs-french)
-- [Captures d'ecran](#captures-decran)
-- [Fonctionnalites de l'interface](#fonctionnalites-de-linterface)
+- [Captures d'écran](#captures-décran)
+- [Fonctionnalités de l'interface](#fonctionnalités-de-linterface)
 - [Catalogue de commandes](#catalogue-de-commandes)
-- [Modele de securite des commandes](#modele-de-securite-des-commandes)
-- [Prerequis](#prerequis)
-- [Premier lancement](#premier-lancement-pas-a-pas)
+- [Modèle de sécurité des commandes](#modèle-de-sécurité-des-commandes)
+- [Prérequis](#prérequis)
+- [Premier lancement](#premier-lancement-pas-à-pas)
 - [Raccourci bureau](#raccourci-bureau)
-- [Parametres en ligne de commande](#parametres-en-ligne-de-commande)
-- [Fichiers ecrits par le script](#fichiers-ecrits-par-le-script)
-- [Etendre le catalogue](#etendre-le-catalogue)
-- [Deploiement multi-machines](#deploiement-multi-machines)
-- [Depannage](#depannage)
+- [Paramètres en ligne de commande](#paramètres-en-ligne-de-commande)
+- [Fichiers écrits par le script](#fichiers-écrits-par-le-script)
+- [Étendre le catalogue](#étendre-le-catalogue)
+- [Déploiement multi-machines](#déploiement-multi-machines)
+- [Dépannage](#dépannage)
 
 ---
 
-## Presentation
+## Présentation
 
-`Toolbox-SystemCommands-FRENCH.ps1` est un lanceur graphique (WinForms, theme sombre) pour les commandes PowerShell/cmd du quotidien utilisees pour diagnostiquer et entretenir une machine Windows 11 — sante disque, resets reseau, reparations Windows Update, verification des pilotes, posture de securite, bascules de confidentialite/telemetrie, et bien plus.
+`Toolbox-SystemCommands-FRENCH.ps1` est un lanceur graphique (WinForms, thème sombre) pour les commandes PowerShell/cmd du quotidien utilisées pour diagnostiquer et entretenir une machine Windows 11 — santé disque, resets réseau, réparations Windows Update, vérification des pilotes, posture de sécurité, bascules de confidentialité/télémétrie, et bien plus.
 
-Chaque commande s'execute dans **sa propre fenetre console** (`cmd.exe /k`), donc vous voyez la sortie brute, non filtree, exactement comme si vous aviez tape la commande vous-meme — la toolbox ne parse, ne capture ni ne reinterprete rien.
+Chaque commande s'exécute dans **sa propre fenêtre console** (`cmd.exe /k`), donc vous voyez la sortie brute, non filtrée, exactement comme si vous aviez tapé la commande vous-même — la toolbox ne parse, ne capture ni ne réinterprète rien.
 
-L'application **s'auto-eleve au demarrage** : comme la plupart des commandes necessitent de toute facon les droits administrateur, l'elevation se fait une seule fois pour toute la session, et chaque fenetre console ouverte ensuite herite de cette elevation — plus de prompt UAC repete par bouton.
+L'application **s'auto-élève au démarrage** : comme la plupart des commandes nécessitent de toute façon les droits administrateur, l'élévation se fait une seule fois pour toute la session, et chaque fenêtre console ouverte ensuite hérite de cette élévation — plus de prompt UAC répété par bouton.
 
-Un seul fichier compagnon accompagne le script et doit rester dans le meme dossier : **`Commands-FRENCH.psd1`**, le catalogue de commandes (145 commandes).
+Un seul fichier compagnon accompagne le script et doit rester dans le même dossier : **`Commands-FRENCH.psd1`**, le catalogue de commandes (157 commandes).
 
 ---
 
 ## Structure des dossiers : EN vs FRENCH
 
-Ce depot fournit **deux versions independantes et autonomes** de la toolbox — anglaise et francaise — chacune dans son propre dossier, pour ne jamais melanger le script d'une langue avec le catalogue de l'autre :
+Ce dépôt fournit **deux versions indépendantes et autonomes** de la toolbox — anglaise et française — chacune dans son propre dossier, pour ne jamais mélanger le script d'une langue avec le catalogue de l'autre :
 
 | Dossier | Contenu |
 |---|---|
-| **`Toolbox-SystemCommands-FRENCH/`** | `Toolbox-SystemCommands-FRENCH.ps1` + `Commands-FRENCH.psd1` — entierement en francais : libelles, descriptions, texte d'aide, et tout ce qui s'affiche dans la console. **C'est cette version-ci, celle documentee dans ce README.** |
-| **`Toolbox-SystemCommands-EN/`** | Le script et le catalogue en langue anglaise — memes fonctionnalites, memes 145 commandes, entierement en anglais |
+| **`Toolbox-SystemCommands-FRENCH/`** | `Toolbox-SystemCommands-FRENCH.ps1` + `Commands-FRENCH.psd1` — entièrement en français : libellés, descriptions, texte d'aide, et tout ce qui s'affiche dans la console. **C'est cette version-ci, celle documentee dans ce README.** |
+| **`Toolbox-SystemCommands-EN/`** | Le script et le catalogue en langue anglaise — mêmes fonctionnalités, mêmes 157 commandes, entièrement en anglais |
 
-Les deux versions sont fonctionnellement identiques (meme catalogue, memes categories, meme nombre d'assertions au self-test) — seule la langue d'affichage differe. Choisissez **un seul** dossier et copiez **les deux fichiers qu'il contient ensemble** ; ne melangez jamais le `.ps1` d'un dossier avec le `.psd1` de l'autre (`Toolbox-SystemCommands-FRENCH.ps1` va avec `Commands-FRENCH.psd1`, pas avec le catalogue anglais) — les libelles et les textes se retrouveraient alors dans deux langues differentes au sein de la meme interface. Les deux versions fonctionnent aussi bien sur une installation Windows en francais qu'en anglais — ce script ne fait que lire/ecrire directement dans le registre et WMI, donc contrairement a d'autres scripts de la suite, rien ici n'est affecte par la langue d'affichage de Windows.
+Les deux versions sont fonctionnellement identiques (même catalogue, mêmes catégories, même nombre d'assertions au self-test) — seule la langue d'affichage diffère. Choisissez **un seul** dossier et copiez **les deux fichiers qu'il contient ensemble** ; ne mélangez jamais le `.ps1` d'un dossier avec le `.psd1` de l'autre (`Toolbox-SystemCommands-FRENCH.ps1` va avec `Commands-FRENCH.psd1`, pas avec le catalogue anglais) — les libellés et les textes se retrouveraient alors dans deux langues différentes au sein de la même interface. Les deux versions fonctionnent aussi bien sur une installation Windows en français qu'en anglais — ce script ne fait que lire/écrire directement dans le registre et WMI, donc contrairement à d'autres scripts de la suite, rien ici n'est affecté par la langue d'affichage de Windows.
 
 Si vous n'avez besoin que d'une seule langue, vous pouvez supprimer sans risque le dossier dont vous ne vous servez pas.
 
 ---
 
-## Captures d'ecran
+## Captures d'écran
 
 <p float="left">
   <img src="https://raw.githubusercontent.com/NephVx2/Toolbox-SystemCommands/main/screenshots-FRENCH/01-int%C3%A9grit%C3%A9-syst%C3%A8me.png" width="48%" />
   <img src="https://raw.githubusercontent.com/NephVx2/Toolbox-SystemCommands/main/screenshots-FRENCH/11-html-preview.png" width="48%" />
 </p>
 
-A gauche : la fenetre principale (categorie Integrite systeme depliee, barre favoris/recherche/export, panneau de description fixe) avec le popup d'aide du Pack Integrite complet ouvert. A droite : le rapport HTML d'historique exporte.
+À gauche : la fenêtre principale (catégorie Intégrité système dépliée, barre favoris/recherche/export, panneau de description fixe) avec le popup d'aide du Pack Intégrité complet ouvert. À droite : le rapport HTML d'historique exporté.
 
-D'autres captures (Disque, Reseau avec le detail de Reset pile TCP/IP, Windows Update/Performance, une verification live de l'etat de virtualisation, Pilotes/Materiel, Securite rapide avec les certificats Secure Boot 2023, Confidentialite/Telemetrie, et Divers) sont dans le dossier [`screenshots-FRENCH`](https://github.com/NephVx2/Toolbox-SystemCommands/tree/main/screenshots-FRENCH).
+D'autres captures (Disque, Réseau avec le détail de Reset pile TCP/IP, Windows Update/Performance, une vérification live de l'état de virtualisation, Pilotes/Matériel, Sécurité rapide avec les certificats Secure Boot 2023, Confidentialité/Télémétrie, et Divers) sont dans le dossier [`screenshots-FRENCH`](https://github.com/NephVx2/Toolbox-SystemCommands/tree/main/screenshots-FRENCH).
 
 ---
 
-## Fonctionnalites de l'interface
+## Fonctionnalités de l'interface
 
-| Fonctionnalite | Detail |
+| Fonctionnalité | Détail |
 |---|---|
-| **Categories repliables** | Cliquer sur l'en-tete d'une categorie pour la replier/deplier — utile des que le catalogue depasse une vingtaine de commandes |
-| **Favoris** | Cliquer sur l'etoile a cote de n'importe quelle commande pour l'epingler ; persiste dans `Favoris.txt` d'une session a l'autre ; filtre "Favoris uniquement" disponible |
-| **Recherche** | `Ctrl+F` place directement le curseur dans la barre de recherche ; la recherche porte sur le libelle, la description, **et** le texte d'aide de la commande (pas seulement le libelle visible du bouton) |
-| **Bouton d'aide (`?`)** | Present sur chaque commande pour garder un alignement constant, mais actif (cyan, cliquable) uniquement sur les commandes possedant un champ `Help` — ouvre une fenetre avec une explication plus detaillee. 81 commandes sur 145 en possedent une actuellement |
-| **Clic droit → Copier la commande** | Copie la commande reelle sous-jacente dans le presse-papiers, si vous preferez la lancer ou l'inspecter vous-meme |
-| **Confirmations** | Les commandes marquees `Confirm = $true` dans le catalogue demandent une confirmation Oui/Non avant de se lancer (voir [Modele de securite des commandes](#modele-de-securite-des-commandes)) |
-| **Historique** | Chaque lancement est horodate et enregistre, avec le nom de la machine, l'utilisateur, la version de Windows, et le PID du processus lance |
-| **Export HTML** | Un bouton genere un rapport a theme sombre (identite visuelle partagee avec le reste de la suite de maintenance) — groupe par jour (le plus recent deplie, les precedents replies), avec un filtre JavaScript en direct, des cartes de statistiques (total commandes, jours d'activite, commandes sensibles lancees, commande la plus utilisee), et les commandes sensibles surlignees en orange |
-| **Export JSON** | Memes donnees d'historique en JSON exploitable par machine |
+| **Catégories repliables** | Cliquer sur l'en-tête d'une catégorie pour la replier/déplier — utile dès que le catalogue dépasse une vingtaine de commandes |
+| **Favoris** | Cliquer sur l'étoile à côté de n'importe quelle commande pour l'épingler ; persiste dans `Favoris.txt` d'une session à l'autre ; filtre "Favoris uniquement" disponible |
+| **Recherche** | `Ctrl+F` place directement le curseur dans la barre de recherche ; la recherche porte sur le libellé, la description, **et** le texte d'aide de la commande (pas seulement le libellé visible du bouton) |
+| **Bouton d'aide (`?`)** | Présent sur chaque commande pour garder un alignement constant, mais actif (cyan, cliquable) uniquement sur les commandes possédant un champ `Help` — ouvre une fenêtre avec une explication plus détaillée. 93 commandes sur 157 en possèdent une actuellement |
+| **Clic droit → Copier la commande** | Copie la commande réelle sous-jacente dans le presse-papiers, si vous préférez la lancer ou l'inspecter vous-même |
+| **Confirmations** | Les commandes marquées `Confirm = $true` dans le catalogue demandent une confirmation Oui/Non avant de se lancer (voir [Modèle de sécurité des commandes](#modèle-de-sécurité-des-commandes)) |
+| **Historique** | Chaque lancement est horodaté et enregistré, avec le nom de la machine, l'utilisateur, la version de Windows, et le PID du processus lancé |
+| **Export HTML** | Un bouton génère un rapport à thème sombre (identité visuelle partagée avec le reste de la suite de maintenance) — groupe par jour (le plus récent déplié, les précédents repliés), avec un filtre JavaScript en direct, des cartes de statistiques (total commandes, jours d'activité, commandes sensibles lancées, commande la plus utilisee), et les commandes sensibles surlignées en orange |
+| **Export JSON** | Mêmes données d'historique en JSON exploitable par machine |
 
 <img src="https://raw.githubusercontent.com/NephVx2/Toolbox-SystemCommands/main/screenshots-FRENCH/09-check-services-t%C3%A9l%C3%A9m%C3%A9trie.png" width="70%" />
 
-*Le popup d'aide du bouton `?`, ouvert sur "Verification services telemetrie" — sa sortie console (derriere) montre les 5 services qu'elle vient d'interroger, et le popup detaille ce que fait chacun d'eux.*
+*Le popup d'aide du bouton `?`, ouvert sur "Verification services telemetrie" — sa sortie console (derrière) montre les 5 services qu'elle vient d'interroger, et le popup détaillé ce que fait chacun d'eux.*
 
 ---
 
 ## Catalogue de commandes
 
-**145 commandes** reparties en **9 categories**. La description complete en langage clair et (pour beaucoup) un texte d'aide etendu sont affiches directement dans l'application — ce tableau est une carte, pas un substitut.
+**157 commandes** réparties en **9 catégories**. La description complète en langage clair et (pour beaucoup) un texte d'aide étendu sont affichés directement dans l'application — ce tableau est une carte, pas un substitut.
 
-| Categorie | Nombre | Exemples |
+| Catégorie | Nombre | Exemples |
 |---|---|---|
-| **Integrite systeme** | 12 | SFC /scannow, DISM CheckHealth/ScanHealth/RestoreHealth, pack combine CHKDSK+DISM+SFC, points de restauration |
-| **Disque** | 11 | CHKDSK (variantes lecture seule et reparation), etat SMART, verification TRIM, latence disque en temps reel, historique des erreurs disque |
-| **Reseau** | 18 | Flush DNS, reset Winsock/TCP-IP, renouvellement de bail IP, test NextDNS, reseaux/vitesse Wifi, IP publique, diagnostic de connectivite multi-niveaux, contenu du fichier hosts |
-| **Windows Update** | 9 | Reset des composants, scan force, reset Microsoft Store, historique des mises a jour, taille du cache SoftwareDistribution, verification de redemarrage en attente |
-| **Performance** | 16 | Applications au demarrage (y compris via taches planifiees), detail du temps de demarrage, score WinSAT, bascules HVCI/VBS, top processus RAM/CPU, service de recherche Windows |
-| **Pilotes / Materiel** | 12 | Peripheriques en erreur, etat GPU NVIDIA, info BIOS/carte mere, RAM installee, pilotes recemment installes, peripheriques desactives |
-| **Securite rapide** | 22 | Etat Defender, verification SMBv1, verification pare-feu, Secure Boot/TPM, BitLocker, tentatives de connexion echouees, regles ASR, UAC, Credential Guard, acces controle aux dossiers |
-| **Confidentialite / Telemetrie** | 28 | Niveau de telemetrie, acces camera/micro/localisation, ID de publicite, Windows Recall, recherche web et suggestions sponsorisees du menu Demarrer, Copilot, Delivery Optimization, WER, synchronisation OneDrive — la plupart en paires "verifier l'etat" / "desactiver" |
-| **Divers** | 17 | Rapport batterie, diagnostic energie, rapport DirectX, etat d'activation Windows, historique des arrets inattendus, synchronisation de l'heure, imprimantes installees |
+| **Intégrité système** | 12 | SFC /scannow, DISM CheckHealth/ScanHealth/RestoreHealth, pack combiné CHKDSK+DISM+SFC, points de restauration |
+| **Disque** | 11 | CHKDSK (variantes lecture seule et réparation), état SMART, vérification TRIM, latence disque en temps réel, historique des erreurs disque |
+| **Réseau** | 18 | Flush DNS, reset Winsock/TCP-IP, renouvellement de bail IP, test NextDNS, réseaux/vitesse Wifi, IP publique, diagnostic de connectivité multi-niveaux, contenu du fichier hosts |
+| **Windows Update** | 9 | Reset des composants, scan forcé, reset Microsoft Store, historique des mises à jour, taille du cache SoftwareDistribution, vérification de redémarrage en attente |
+| **Performance** | 16 | Applications au démarrage (y compris via tâches planifiées), détail du temps de démarrage, score WinSAT, bascules HVCI/VBS, top processus RAM/CPU, service de recherche Windows |
+| **Pilotes / Matériel** | 12 | Périphériques en erreur, état GPU NVIDIA, info BIOS/carte mère, RAM installée, pilotes récemment installés, périphériques désactivés |
+| **Sécurité rapide** | 34 | État Defender, vérification SMBv1, vérification pare-feu, Secure Boot/TPM, BitLocker, tentatives de connexion échouées, règles ASR, UAC, Credential Guard, accès contrôle aux dossiers, tunnels IPv6 automatiques (Teredo / 6to4 / ISATAP), résolution de noms héritée (LLMNR / NetBIOS / mDNS), Defender en profondeur (exclusions, protection contre la falsification) et historique des menaces, sécurité PowerShell (v2, journalisation), services d'accès distant, identifiants stockés et ouverture automatique de session — la plupart avec une vérification en lecture seule et, quand une correction sûre existe, une commande de désactivation |
+| **Confidentialité / Télémétrie** | 28 | Niveau de télémétrie, accès caméra/micro/localisation, ID de publicité, Windows Recall, recherche web et suggestions sponsorisées du menu Démarrer, Copilot, Delivery Optimization, WER, synchronisation OneDrive — la plupart en paires "vérifier l'état" / "désactiver" |
+| **Divers** | 17 | Rapport batterie, diagnostic énergie, rapport DirectX, état d'activation Windows, historique des arrêts inattendus, synchronisation de l'heure, imprimantes installées |
 
 ---
 
-## Modele de securite des commandes
+## Modèle de sécurité des commandes
 
-- **Chaque commande a `Confirm = $true` ou `$false`** dans le catalogue — il n'existe pas d'etat "indecis" ; le self-test verifie que ce champ est toujours present.
-- **26 commandes necessitent actuellement une confirmation** — tout ce qui modifie l'etat du systeme, necessite un redemarrage, ou pourrait perturber une session en cours (ex : `Reset Winsock`, `Reset pile TCP/IP`, `CHKDSK C: /f /r (au reboot)`, `Redemarrer le PC`, `Eteindre le PC`, la plupart des bascules de desactivation dans Confidentialite/Telemetrie).
-- Une assertion dediee du self-test verrouille le fait que six commandes specifiques connues comme sensibles (reset Winsock, reset pile TCP/IP, reset composants WU, CHKDSK planifie, redemarrage, extinction) portent **toujours** `Confirm = $true` — une regression a cet endroit ferait immediatement echouer `-SelfTest` plutot que de se manifester plus tard comme une action destructrice silencieuse et non confirmee.
-- **Aucune commande n'utilise `wmic`** (retire depuis Windows 11 24H2) — verifie par une assertion de regression dediee du self-test.
-- Le champ `Cmd` du catalogue est **toujours en guillemets simples** dans `Commands-FRENCH.psd1`, ce qui empeche structurellement toute interpolation de variable PowerShell (`$_`, `$err`, etc.) de se glisser dans une commande — la cause racine de deux bugs precoces (v1.4.3, v1.4.4) que cette conception elimine entierement plutot que de corriger au cas par cas.
-- Quelques commandes trop complexes pour survivre a la reconstruction `-Command` de `cmd.exe` sont stockees en Base64 (`-EncodedCommand`, UTF-16LE) a la place. Deux assertions du self-test decodent chacune d'entre elles et verifient que le script obtenu est syntaxiquement valide (via le vrai parseur AST PowerShell) — pour qu'un blob Base64 corrompu ou tronque soit detecte par `-SelfTest` plutot que de se manifester par une fenetre console vide et silencieuse au clic.
+- **Chaque commande a `Confirm = $true` ou `$false`** dans le catalogue — il n'existe pas d'état "indécis" ; le self-test vérifie que ce champ est toujours présent.
+- **31 commandes nécessitent actuellement une confirmation** — tout ce qui modifie l'état du système, nécessite un redémarrage, ou pourrait perturber une session en cours (ex : `Reset Winsock`, `Reset pile TCP/IP`, `CHKDSK C: /f /r (au reboot)`, `Redemarrer le PC`, `Eteindre le PC`, `Desactiver les tunnels IPv6 automatiques`, `Desactiver PowerShell 2.0`, `Desactiver l'ouverture auto de session (Winlogon)`, la plupart des bascules de désactivation dans Confidentialité/Télémétrie).
+- Une assertion dédiée du self-test verrouille le fait que six commandes spécifiques connues comme sensibles (reset Winsock, reset pile TCP/IP, reset composants WU, CHKDSK planifié, redémarrage, extinction) portent **toujours** `Confirm = $true` — une régression à cet endroit ferait immédiatement échouer `-SelfTest` plutôt que de se manifester plus tard comme une action destructrice silencieuse et non confirmée.
+- **Aucune commande n'utilise `wmic`** (retiré depuis Windows 11 24H2) — vérifié par une assertion de régression dédiée du self-test.
+- Le champ `Cmd` du catalogue est **toujours en guillemets simples** dans `Commands-FRENCH.psd1`, ce qui empêche structurellement toute interpolation de variable PowerShell (`$_`, `$err`, etc.) de se glisser dans une commande — la cause racine de deux bugs précoces (v1.4.3, v1.4.4) que cette conception élimine entièrement plutôt que de corriger au cas par cas.
+- Quelques commandes trop complexes pour survivre à la reconstruction `-Command` de `cmd.exe` sont stockées en Base64 (`-EncodedCommand`, UTF-16LE) à la place. Deux assertions du self-test décodent chacune d'entre elles et vérifient que le script obtenu est syntaxiquement valide (via le vrai parseur AST PowerShell) — pour qu'un blob Base64 corrompu ou tronqué soit détecté par `-SelfTest` plutôt que de se manifester par une fenêtre console vide et silencieuse au clic.
 
 ---
 
-## Prerequis
+## Prérequis
 
 - Windows 10 ou 11.
-- PowerShell 5.1 (integre a Windows) — le script cible `#Requires -Version 5.1`, donc PowerShell 7+ fonctionne aussi.
-- Droits administrateur. L'application s'auto-eleve au demarrage (fenetre UAC) — sauf `-SelfTest`, qui fonctionne sans elevation et n'ouvre jamais l'interface.
-- `Commands-FRENCH.psd1` **doit** etre present dans le meme dossier que le script — l'application affiche une erreur claire et se replie sur un catalogue vide plutot que de planter si le fichier est absent ou invalide.
-- Si le script est signe numeriquement (recommande en environnement `-ExecutionPolicy AllSigned`/`RemoteSigned`) : le certificat de signature doit etre approuve sur la machine cible.
+- PowerShell 5.1 (intégré à Windows) — le script cible `#Requires -Version 5.1`, donc PowerShell 7+ fonctionne aussi.
+- Droits administrateur. L'application s'auto-élève au démarrage (fenêtre UAC) — sauf `-SelfTest`, qui fonctionne sans élévation et n'ouvre jamais l'interface.
+- `Commands-FRENCH.psd1` **doit** être présent dans le même dossier que le script — l'application affiche une erreur claire et se replie sur un catalogue vide plutôt que de planter si le fichier est absent ou invalide.
+- Si le script est signé numériquement (recommande en environnement `-ExecutionPolicy AllSigned`/`RemoteSigned`) : le certificat de signature doit être approuvé sur la machine cible.
 
 ---
 
-## Premier lancement (pas a pas)
+## Premier lancement (pas à pas)
 
-1. Copier **a la fois** `Toolbox-SystemCommands-FRENCH.ps1` **et** `Commands-FRENCH.psd1` — issus du meme dossier de langue, voir [Structure des dossiers](#structure-des-dossiers--en-vs-french) — sur la machine cible, dans le meme dossier (ex : `C:\Scripts\Toolbox`). Le script ne trouvera pas ses commandes si `Commands-FRENCH.psd1` est laisse de cote.
+1. Copier **à la fois** `Toolbox-SystemCommands-FRENCH.ps1` **et** `Commands-FRENCH.psd1` — issus du même dossier de langue, voir [Structure des dossiers](#structure-des-dossiers--en-vs-french) — sur la machine cible, dans le même dossier (ex : `C:\Scripts\Toolbox`). Le script ne trouvera pas ses commandes si `Commands-FRENCH.psd1` est laissé de côté.
 
 2. Ouvrir un terminal PowerShell, puis se placer dans le dossier qui contient les deux fichiers (adapter le chemin ; garder les guillemets s'il contient des espaces) :
 
@@ -136,20 +136,20 @@ D'autres captures (Disque, Reseau avec le detail de Reset pile TCP/IP, Windows U
    cd "$HOME\Downloads"
    ```
 
-3. **Debloquer les deux fichiers** s'ils ont ete telecharges depuis Internet. Windows marque les fichiers telecharges, et la politique d'execution de PowerShell (`RemoteSigned`, par exemple) refuse de lancer un script marque :
+3. **Débloquer les deux fichiers** s'ils ont été téléchargés depuis Internet. Windows marque les fichiers téléchargés, et la politique d'exécution de PowerShell (`RemoteSigned`, par exemple) refuse de lancer un script marqué :
 
    ```powershell
    Unblock-File .\Toolbox-SystemCommands-FRENCH.ps1
    Unblock-File .\Commands-FRENCH.psd1
    ```
 
-   Si PowerShell indique plutot que l'execution de scripts est desactivee sur ce systeme (la politique par defaut de Windows est `Restricted`), autoriser d'abord les scripts pour le compte courant (la modification ne s'applique qu'a ce compte, pas a toute la machine) :
+   Si PowerShell indique plutôt que l'exécution de scripts est désactivée sur ce système (la politique par défaut de Windows est `Restricted`), autoriser d'abord les scripts pour le compte courant (la modification ne s'applique qu'à ce compte, pas à toute la machine) :
 
    ```powershell
    Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
    ```
 
-   Toujours bloque ? Voir le [guide pas a pas](https://github.com/NephVx2/Script-blocked-Look-at-this/blob/main/README_POWERSHELL_FRENCH.md).
+   Toujours bloque ? Voir le [guide pas à pas](https://github.com/NephVx2/Script-blocked-Look-at-this/blob/main/README_POWERSHELL_FRENCH.md).
 
 4. Valider le catalogue et les fonctions internes **sans ouvrir l'interface et sans droits admin** :
 
@@ -157,7 +157,7 @@ D'autres captures (Disque, Reseau avec le detail de Reset pile TCP/IP, Windows U
    .\Toolbox-SystemCommands-FRENCH.ps1 -SelfTest
    ```
 
-   Execute 47 assertions : structure du catalogue (chaque commande a un libelle/une commande/une description/un flag confirm, aucun libelle duplique), regressions connues (aucun pipe non echappe, aucun `wmic`, les blocs `-EncodedCommand` decodent et se parsent tous correctement), les six commandes sensibles nommees portent toutes `Confirm = $true`, toutes les fonctions requises sont definies, les chemins de journalisation/favoris sont valides, et la verification d'elevation elle-meme fonctionne. Sort avec le code `0` si tout passe, `1` sinon.
+   Exécute 47 assertions : structure du catalogue (chaque commande a un libellé/une commande/une description/un flag confirm, aucun libellé duplique), régressions connues (aucun pipe non échappé, aucun `wmic`, les blocs `-EncodedCommand` décodent et se parsent tous correctement), les six commandes sensibles nommées portent toutes `Confirm = $true`, toutes les fonctions requises sont définies, les chemins de journalisation/favoris sont valides, et la vérification d'élévation elle-même fonctionne. Sort avec le code `0` si tout passe, `1` sinon.
 
 5. Lancer la toolbox normalement (accepter le prompt UAC) :
 
@@ -165,80 +165,80 @@ D'autres captures (Disque, Reseau avec le detail de Reset pile TCP/IP, Windows U
    .\Toolbox-SystemCommands-FRENCH.ps1
    ```
 
-6. Parcourir par categorie, ou appuyer sur `Ctrl+F` et rechercher ce dont vous avez besoin (ex : "DNS", "BitLocker", "telemetrie").
+6. Parcourir par catégorie, ou appuyer sur `Ctrl+F` et rechercher ce dont vous avez besoin (ex : "DNS", "BitLocker", "télémétrie").
 
-7. Cliquer sur une commande. Si elle est marquee sensible, confirmer le prompt Oui/Non. Une fenetre console s'ouvre et l'execute — lisez sa sortie directement la.
+7. Cliquer sur une commande. Si elle est marquée sensible, confirmer le prompt Oui/Non. Une fenêtre console s'ouvre et l'exécute — lisez sa sortie directement la.
 
-8. Marquer d'une etoile (⭐) les commandes que vous utilisez souvent — elles seront ensuite rapidement filtrables sans avoir a fouiller dans les categories.
+8. Marquer d'une étoile (⭐) les commandes que vous utilisez souvent — elles seront ensuite rapidement filtrables sans avoir à fouiller dans les catégories.
 
-9. Pour consulter ce qui a ete lance, utiliser le bouton d'export HTML ou JSON dans la barre superieure.
+9. Pour consulter ce qui a été lancé, utiliser le bouton d'export HTML ou JSON dans la barre supérieure.
 
 ---
 
 ## Raccourci bureau
 
-Lancer la toolbox par clic droit sur le fichier `.ps1` puis "Executer avec PowerShell" fonctionne, mais fait clignoter brievement une fenetre console et la laisse ouverte derriere l'interface graphique. Un raccourci bureau evite les deux problemes et offre un lancement par simple double-clic — utile si vous comptez utiliser la toolbox regulierement.
+Lancer la toolbox par clic droit sur le fichier `.ps1` puis "Exécuter avec PowerShell" fonctionne, mais fait clignoter brièvement une fenêtre console et la laisse ouverte derrière l'interface graphique. Un raccourci bureau évite les deux problèmes et offre un lancement par simple double-clic — utile si vous comptez utiliser la toolbox régulièrement.
 
 1. Clic droit sur le Bureau → **Nouveau → Raccourci**.
 
-2. Dans l'emplacement, saisir (en adaptant le chemin du script a l'endroit ou vous l'avez place) — choisir la variante qui correspond a ce qui est installe sur la machine :
+2. Dans l'emplacement, saisir (en adaptant le chemin du script à l'endroit où vous l'avez placé) — choisir la variante qui correspond à ce qui est installé sur la machine :
 
-   **Windows PowerShell 5.1** (integre a toute installation Windows, toujours disponible) :
+   **Windows PowerShell 5.1** (intégré à toute installation Windows, toujours disponible) :
 
    ```
    powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Scripts\Toolbox\Toolbox-SystemCommands-FRENCH.ps1"
    ```
 
-   **PowerShell 7+** (uniquement si installe separement) :
+   **PowerShell 7+** (uniquement si installé séparément) :
 
    ```
    pwsh.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "C:\Scripts\Toolbox\Toolbox-SystemCommands-FRENCH.ps1"
    ```
 
-   | Parametre | Pourquoi |
+   | Paramètre | Pourquoi |
    |---|---|
-   | `-NoProfile` | Ignore le chargement de votre profil PowerShell, donc la toolbox demarre plus vite et n'est pas affectee par un contenu personnalise dans ce profil |
-   | `-ExecutionPolicy Bypass` | S'applique uniquement a ce processus — permet au script de s'executer meme si la politique d'execution par defaut du systeme le bloquerait sinon, sans modifier cette politique a l'echelle de la machine |
-   | `-WindowStyle Hidden` | Supprime la fenetre console du processus de lancement, pour que seule l'interface propre de la toolbox apparaisse |
+   | `-NoProfile` | Ignore le chargement de votre profil PowerShell, donc la toolbox démarre plus vite et n'est pas affectée par un contenu personnalisé dans ce profil |
+   | `-ExecutionPolicy Bypass` | S'applique uniquement à ce processus — permet au script de s'exécuter même si la politique d'exécution par défaut du système le bloquerait sinon, sans modifier cette politique à l'échelle de la machine |
+   | `-WindowStyle Hidden` | Supprime la fenêtre console du processus de lancement, pour que seule l'interface propre de la toolbox apparaisse |
 
-   Les deux variantes se comportent en pratique de facon identique : la toolbox s'auto-eleve au demarrage via `Start-Process powershell.exe -Verb RunAs` (voir le bloc d'auto-elevation du script), qui relance toujours sous Windows PowerShell 5.1 une fois le prompt UAC accepte — que le raccourci ait demarre avec `powershell.exe` ou `pwsh.exe`. Le choix entre les deux n'affecte que ce tout premier instant, bref et non eleve, avant que l'UAC ne se declenche ; choisissez celui que vous avez effectivement installe.
+   Les deux variantes se comportent en pratique de façon identique : la toolbox s'auto-élève au démarrage via `Start-Process powershell.exe -Verb RunAs` (voir le bloc d'auto-élévation du script), qui relance toujours sous Windows PowerShell 5.1 une fois le prompt UAC accepte — que le raccourci ait démarré avec `powershell.exe` ou `pwsh.exe`. Le choix entre les deux n'affecte que ce tout premier instant, bref et non élevé, avant que l'UAC ne se déclenche ; choisissez celui que vous avez effectivement installé.
 
-3. Nommer le raccourci (ex : "Toolbox Commandes Systeme"), puis terminer.
+3. Nommer le raccourci (ex : "Toolbox Commandes Système"), puis terminer.
 
-4. *(Optionnel)* Clic droit sur le nouveau raccourci → **Proprietes** → **Changer d'icone...** pour choisir quelque chose de plus reconnaissable que l'icone PowerShell par defaut.
+4. *(Optionnel)* Clic droit sur le nouveau raccourci → **Propriétés** → **Changer d'icône...** pour choisir quelque chose de plus reconnaissable que l'icône PowerShell par défaut.
 
-5. *(Optionnel)* Sur le meme onglet **Proprietes**, regler **Executer** sur **Reduite** en securite supplementaire — avec `-WindowStyle Hidden` deja present dans la commande, c'est normalement inutile, mais c'est une option sans risque sur les systemes ou un outil de securite intercepte et neutralise `-WindowStyle`.
+5. *(Optionnel)* Sur le même onglet **Propriétés**, régler **Exécuter** sur **Réduite** en sécurité supplémentaire — avec `-WindowStyle Hidden` déjà présent dans la commande, c'est normalement inutile, mais c'est une option sans risque sur les systèmes où un outil de sécurité intercepte et neutralise `-WindowStyle`.
 
-L'invite d'elevation UAC continue de s'afficher au lancement — `-WindowStyle Hidden` masque uniquement la fenetre console, elle ne supprime pas (et ne doit pas supprimer) la confirmation administrateur.
+L'invite d'élévation UAC continue de s'afficher au lancement — `-WindowStyle Hidden` masque uniquement la fenêtre console, elle ne supprime pas (et ne doit pas supprimer) la confirmation administrateur.
 
 ---
 
-## Parametres en ligne de commande
+## Paramètres en ligne de commande
 
-| Parametre | Description |
+| Paramètre | Description |
 |---|---|
-| `-SelfTest` | Execute la batterie de tests internes a 47 assertions (integrite du catalogue, fonctions requises, regressions connues) puis quitte. Aucun droit admin requis, l'interface ne s'ouvre jamais. Code de sortie `0` = tout est passe, `1` = au moins un echec. |
+| `-SelfTest` | Exécute la batterie de tests internes à 47 assertions (intégrité du catalogue, fonctions requises, régressions connues) puis quitte. Aucun droit admin requis, l'interface ne s'ouvre jamais. Code de sortie `0` = tout est passé, `1` = au moins un échec. |
 
-Il n'existe pas de parametre CLI pour lancer une commande specifique directement — la toolbox est concue pour la navigation et le clic, pas pour l'invocation scriptee.
+Il n'existe pas de paramètre CLI pour lancer une commande spécifique directement — la toolbox est conçue pour la navigation et le clic, pas pour l'invocation scriptee.
 
 ---
 
-## Fichiers ecrits par le script
+## Fichiers écrits par le script
 
 | Fichier / dossier | Contenu |
 |---|---|
-| `%USERPROFILE%\Desktop\Rapports_Maintenance\ToolboxCommandes\Historique.log` | Journal texte brut, ajout uniquement, de chaque commande lancee — horodatage, nom de machine, utilisateur, version de Windows, et PID du processus lance |
-| `%USERPROFILE%\Desktop\Rapports_Maintenance\ToolboxCommandes\Favoris.txt` | Un libelle de commande favorite par ligne, recharge au lancement suivant |
-| `Historique.html` *(a la demande, bouton d'export)* | Rapport visuel a theme sombre, groupe par jour et repliable, avec recherche et cartes de statistiques |
-| `Historique.json` *(a la demande, bouton d'export)* | Memes donnees d'historique en JSON exploitable par machine |
+| `%USERPROFILE%\Desktop\Rapports_Maintenance\ToolboxCommandes\Historique.log` | Journal texte brut, ajout uniquement, de chaque commande lancée — horodatage, nom de machine, utilisateur, version de Windows, et PID du processus lancé |
+| `%USERPROFILE%\Desktop\Rapports_Maintenance\ToolboxCommandes\Favoris.txt` | Un libellé de commande favorite par ligne, recharge au lancement suivant |
+| `Historique.html` *(à la demande, bouton d'export)* | Rapport visuel à thème sombre, groupe par jour et repliable, avec recherche et cartes de statistiques |
+| `Historique.json` *(à la demande, bouton d'export)* | Mêmes données d'historique en JSON exploitable par machine |
 
-La toolbox ne redirige ni ne capture jamais la sortie des commandes qu'elle lance — chacune s'execute dans sa propre fenetre `cmd.exe` interactive, donc le journal enregistre *ce qui* a ete lance, pas sa sortie. Voir [Depannage](#depannage) pour comprendre pourquoi c'est un choix delibere, pas un oubli.
+La toolbox ne redirige ni ne capture jamais la sortie des commandes qu'elle lance — chacune s'exécute dans sa propre fenêtre `cmd.exe` interactive, donc le journal enregistre *ce qui* a été lancé, pas sa sortie. Voir [Dépannage](#dépannage) pour comprendre pourquoi c'est un choix délibéré, pas un oubli.
 
 ---
 
-## Etendre le catalogue
+## Étendre le catalogue
 
-Ajouter une commande signifie editer directement `Commands-FRENCH.psd1` — il n'y a volontairement pas d'editeur integre a l'application, pour garder le catalogue en texte brut, facile a comparer, versionner et synchroniser entre machines.
+Ajouter une commande signifie éditer directement `Commands-FRENCH.psd1` — il n'y a volontairement pas d'éditeur intégré à l'application, pour garder le catalogue en texte brut, facile à comparer, versionner et synchroniser entre machines.
 
 ```powershell
 @{ Label   = "Ma nouvelle commande"
@@ -249,55 +249,55 @@ Ajouter une commande signifie editer directement `Commands-FRENCH.psd1` — il n
 }
 ```
 
-**Regles, imposees par `-SelfTest`:**
+**Règles, imposées par `-SelfTest`:**
 
-- `Cmd` doit **toujours** utiliser des guillemets simples, jamais des guillemets doubles — c'est ce qui rend l'interpolation de variable (`$_`, `$err`...) structurellement impossible, pas seulement evitee par convention. Si le texte lui-meme a besoin d'un guillemet simple litteral, le doubler (`''`).
-- `Desc` et `Help` utilisent des guillemets doubles par convention — tout `$` litteral qu'ils contiennent doit etre echappe par un backtick (`` `$ ``), sinon le mode "restricted language" d'`Import-PowerShellDataFile` refusera de charger **tout** le catalogue (un seul `$` non echappe dans le champ `Help` d'une commande a deja casse toute la toolbox de cette maniere — voir l'historique de version du script pour le detail de l'incident).
-- Chaque commande a besoin de `Label`, `Cmd`, `Desc`, et `Confirm` — aucun des quatre ne peut etre omis.
-- Lancer `-SelfTest` apres chaque modification, avant de se fier au changement.
+- `Cmd` doit **toujours** utiliser des guillemets simples, jamais des guillemets doubles — c'est ce qui rend l'interpolation de variable (`$_`, `$err`...) structurellement impossible, pas seulement évitée par convention. Si le texte lui-même a besoin d'un guillemet simple littéral, le doubler (`''`).
+- `Desc` et `Help` utilisent des guillemets doubles par convention — tout `$` littéral qu'ils contiennent doit être échappé par un backtick (`` `$ ``), sinon le mode "restricted language" d'`Import-PowerShellDataFile` refusera de charger **tout** le catalogue (un seul `$` non echappe dans le champ `Help` d'une commande a déjà cassé toute la toolbox de cette manière — voir l'historique de version du script pour le détail de l'incident).
+- Chaque commande a besoin de `Label`, `Cmd`, `Desc`, et `Confirm` — aucun des quatre ne peut être omis.
+- Lancer `-SelfTest` après chaque modification, avant de se fier au changement.
 
 ---
 
-## Deploiement multi-machines
+## Déploiement multi-machines
 
-1. **Distribuer les deux fichiers ensemble** : `Toolbox-SystemCommands-FRENCH.ps1` et `Commands-FRENCH.psd1`, dans le meme dossier — issus du meme dossier de langue (voir [Structure des dossiers](#structure-des-dossiers--en-vs-french)).
+1. **Distribuer les deux fichiers ensemble** : `Toolbox-SystemCommands-FRENCH.ps1` et `Commands-FRENCH.psd1`, dans le même dossier — issus du même dossier de langue (voir [Structure des dossiers](#structure-des-dossiers--en-vs-french)).
 
-2. **Approuver le certificat de signature** si une politique d'execution stricte est en place (`-ExecutionPolicy AllSigned`/`RemoteSigned`).
+2. **Approuver le certificat de signature** si une politique d'exécution stricte est en place (`-ExecutionPolicy AllSigned`/`RemoteSigned`).
 
-3. **Executer `-SelfTest` en premier** sur chaque machine — aucun droit admin necessaire, l'interface ne s'ouvre jamais, sans risque a lancer avant de decider de la suite. Un code de sortie `1` signifie que quelque chose dans le catalogue necessite votre attention avant utilisation.
+3. **Exécuter `-SelfTest` en premier** sur chaque machine — aucun droit admin nécessaire, l'interface ne s'ouvre jamais, sans risque à lancer avant de décider de la suite. Un code de sortie `1` signifie que quelque chose dans le catalogue nécessite votre attention avant utilisation.
 
-4. Comme la toolbox est un **lanceur graphique pense pour un usage interactif, en presence d'un utilisateur**, elle n'est pas concue pour etre declenchee de maniere non supervisee depuis une tache planifiee comme le serait un script de nettoyage — il n'existe pas de parametre CLI pour lancer une commande specifique de maniere non interactive. Deployez-la comme un outil que les gens ouvrent et parcourent eux-memes, pas comme une tache de fond.
+4. Comme la toolbox est un **lanceur graphique pense pour un usage interactif, en présence d'un utilisateur**, elle n'est pas conçue pour être déclenchée de manière non supervisée depuis une tâche planifiée comme le serait un script de nettoyage — il n'existe pas de paramètre CLI pour lancer une commande spécifique de manière non interactive. Déployez-la comme un outil que les gens ouvrent et parcourent eux-mêmes, pas comme une tâche de fond.
 
 5. Garder `Commands-FRENCH.psd1` identique sur toutes les machines — c'est son but.
 
 ---
 
-## Depannage
+## Dépannage
 
 <details>
-<summary><strong>La fenetre console d'une commande est vide ou se ferme instantanement</strong></summary>
+<summary><strong>La fenêtre console d'une commande est vide ou se ferme instantanement</strong></summary>
 
-C'etait historiquement le symptome d'un probleme de decodage ou de syntaxe `-EncodedCommand` (voir l'incident "AutoPlay/AutoRun" dans l'historique de version). Lancer `-SelfTest` — les deux assertions dediees `-EncodedCommand` decodent et verifient la syntaxe de chaque commande encodee du catalogue, et detecteraient ce probleme avant meme que vous ne cliquiez sur le bouton.
+C'était historiquement le symptôme d'un problème de décodage ou de syntaxe `-EncodedCommand` (voir l'incident "AutoPlay/AutoRun" dans l'historique de version). Lancer `-SelfTest` — les deux assertions dédiées `-EncodedCommand` décodent et vérifient la syntaxe de chaque commande encodée du catalogue, et détecteraient ce problème avant même que vous ne cliquiez sur le bouton.
 </details>
 
 <details>
-<summary><strong>Le chargement de Commands-FRENCH.psd1 echoue, ou tout le catalogue est vide</strong></summary>
+<summary><strong>Le chargement de Commands-FRENCH.psd1 échoue, ou tout le catalogue est vide</strong></summary>
 
-Presque toujours un `$` non echappe dans un champ `Desc` ou `Help` (qui utilisent des guillemets doubles, donc PowerShell tente de l'interpoler comme une variable — le mode "restricted language" d'`Import-PowerShellDataFile` refuse alors de charger le fichier entier). Chercher dans le fichier modifie en dernier un `$` litteral non precede d'un backtick. `-SelfTest` inclut une verification de regression dediee qui scanne chaque ligne `Desc`/`Help` a la recherche exactement de ce motif.
+Presque toujours un `$` non échappé dans un champ `Desc` ou `Help` (qui utilisent des guillemets doubles, donc PowerShell tente de l'interpoler comme une variable — le mode "restricted language" d'`Import-PowerShellDataFile` refuse alors de charger le fichier entier). Chercher dans le fichier modifie en dernier un `$` littéral non précédé d'un backtick. `-SelfTest` inclut une vérification de régression dédiée qui scanne chaque ligne `Desc`/`Help` à la recherche exactement de ce motif.
 </details>
 
 <details>
 <summary><strong>-SelfTest signale un FAIL</strong></summary>
 
-Lire le libelle de l'assertion — il pointe directement vers le probleme : un champ manquant sur une commande specifique, un libelle duplique, un `$` non echappe, un appel `wmic` reapparu, ou une commande sensible ayant perdu son `Confirm = $true`. Corriger l'entree du catalogue, puis relancer `-SelfTest`.
+Lire le libellé de l'assertion — il pointe directement vers le problème : un champ manquant sur une commande spécifique, un libellé duplique, un `$` non échappé, un appel `wmic` réapparu, ou une commande sensible ayant perdu son `Confirm = $true`. Corriger l'entrée du catalogue, puis relancer `-SelfTest`.
 </details>
 
 <details>
-<summary><strong>Le rapport d'historique ne montre pas ce qu'une commande a reellement affiche</strong></summary>
+<summary><strong>Le rapport d'historique ne montre pas ce qu'une commande a réellement affiché</strong></summary>
 
-C'est voulu — chaque commande se lance dans sa propre fenetre `cmd.exe` interactive (`Start-Process`, sans redirection de sortie), donc `Historique.log` enregistre la commande qui a ete lancee, pas sa sortie. Capturer la sortie reelle impliquerait de rediriger chacune des 145 commandes vers un fichier journal, ce qui changerait aussi le comportement de plusieurs d'entre elles (celles volontairement laissees interactives/ouvertes, comme les moniteurs reseau en temps reel) par rapport a leur usage prevu — un changement architectural plus large, pas la conception actuelle.
+C'est voulu — chaque commande se lance dans sa propre fenêtre `cmd.exe` interactive (`Start-Process`, sans redirection de sortie), donc `Historique.log` enregistre la commande qui a été lancée, pas sa sortie. Capturer la sortie réelle impliquerait de rediriger chacune des 157 commandes vers un fichier journal, ce qui changerait aussi le comportement de plusieurs d'entre elles (celles volontairement laissées interactives/ouvertes, comme les moniteurs réseau en temps réel) par rapport à leur usage prévu — un changement architectural plus large, pas la conception actuelle.
 </details>
 
 ---
 
-<sub>Toolbox-SystemCommands-FRENCH — lanceur WinForms, confirmation par commande sur tout ce qui modifie l'etat systeme, journalisation complete de l'historique, self-test a 47 assertions.</sub>
+<sub>Toolbox-SystemCommands-FRENCH — lanceur WinForms, confirmation par commande sur tout ce qui modifie l'état système, journalisation complète de l'historique, self-test à 47 assertions.</sub>
